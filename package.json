@@ -23,7 +23,6 @@
     }
   },
   "packageManager": "pnpm@12.16.1",
-  "type": "module",
   "dependencies": {
     "express": "^5.3.0"
   }

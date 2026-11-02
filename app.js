@@ -1,6 +1,6 @@
 // importazioni del Framework Express
 const express = require('express');
-const postRouter = require('./routers/post');
+const postRouter = require('./routers/posts');
 
 const app = express();
 const port = 3000;
@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 });
 
 //3 Registro delle rutte sotto il prefisso '/post'
-app.use('/post', postRouter);
+app.use('/posts', postRouter);
 
 // 4. Avvio del server
 app.listen(port, () => {
