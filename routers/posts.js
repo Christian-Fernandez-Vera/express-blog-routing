@@ -26,4 +26,18 @@ router.put("/:id", (req, res) => {
   res.send(`Modifica integrale del post ${postID}`);
 });
 
+//5. MODIFY: Modifica parziale del post
+//Endpoint: PATCH /posts/:id
+router.patch("/:id", (req, res) => {
+  const postID = req.params.id;
+  res.send(`Modifica parziale del post ${postID}`);
+});
+
+// 6. DESTROY: Eliminazione di un post
+// Endpoint: DELETE /posts/:id
+router.delete("/:id", (req, res) => {
+  const postID = req.params.id;
+  res.send(`Eliminazione del post ${postID}`);
+});
+
 module.exports = router;
