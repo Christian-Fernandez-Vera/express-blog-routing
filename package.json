@@ -1,0 +1,30 @@
+{
+  "name": "express-blog-routing",
+  "version": "1.0.0",
+  "description": "Server backend e rutte REST per la gestione di un blog",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "watch": "node --watch app.js"
+  },
+  "keywords": [
+    "express",
+    "routing",
+    "rest",
+    "crud"
+  ],
+  "author": "Christian",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.16.1",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.16.1",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
