@@ -23,10 +23,52 @@ router.get("/", (req, res, next) => {
   });
 });
 
+// MILESTON 4 + BONUS
 // 2. SHOW: Lettura di un post specifico tramite ID
 // Endpoint: GET /posts/:id
-router.get("/:id", (req, res) => {
-  res.send(`Mostro il post ${req.params.id}`);
+router.get("/:id", (req, res, next) => {
+  // res.send(`Mostro il post ${req.params.id}`);
+
+  // A. Ricuperiamo l'ID de la URL
+  const { id } = req.params;
+  //B Prepared Statement (?) per evitare SQL Injections
+  const postSQL = "SELECT * FROM posts WHERE id = ?;";
+
+  connection.query(postSQL, [id], (err, postResults) => {
+    if (err) return next(err);
+
+    // Se il array è vuoto, l'post no essiste nella DB
+    if (postResults.length === 0) {
+      return res.status(404).json({
+        status: 404,
+        error: "Not Found",
+        message: `Il post con ID ${id} non esiste.`,
+      });
+    }
+
+    // Strazione del post
+    const post = postResults[0];
+
+    // BONUS: Query Many-to-Many per ottenere i tags del post
+    // Uniamo la tabela 'tags' con la tabela pivot 'post_tags'
+    const tagsSQL = `
+  SELECT tags.*
+  FROM tags
+  JOIN post_tags ON tags.id = post_tag.tag_id
+  WHERE post_tag.post_id = ?;
+  `;
+
+    connection.query(tagsSQL, [id], (tagsErr, tagsResults) => {
+      if (tagsErr) return next(tagsErr);
+
+      // Uniamo l'array di etichete all'oggetto del post
+      // In questo modo
+      post.tags = tagsResults;
+
+      // Consegna del post cliente
+      return res.json(post);
+    });
+  });
 });
 
 //3. STORE: Creazione di un nuovo post
