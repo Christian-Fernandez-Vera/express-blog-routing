@@ -1,10 +1,26 @@
 const express = require("express");
 const router = express.Router();
 
+//Connessione central alla DB
+const connection = require("../data/db");
+const { Connection } = require("mysql2");
+
+// MILESTONE 2:
 // 1. INDEX: Lettura de la collezione completa del post
 // Endpoint: GET /posts
-router.get("/", (req, res) => {
-  res.send("Lista dei post");
+router.get("/", (req, res, next) => {
+  // res.send("Lista dei post");
+
+  //A. Prepariamo la SQL pura
+  const sql = "SELECT * FROM posts;";
+  //B. Inizio nel motore di DB
+  connection.query(sql, (err, results) => {
+    //Si la DB da errore, iniziamo il errore al middleware global errorsHandler
+    if (err) return next(err);
+
+    //Consegna la collezione completa in formato JSON
+    return res.json(results);
+  });
 });
 
 // 2. SHOW: Lettura di un post specifico tramite ID

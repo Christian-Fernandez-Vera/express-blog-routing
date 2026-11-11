@@ -4,7 +4,7 @@
   "description": "Server backend e rutte REST per la gestione di un blog",
   "main": "app.js",
   "scripts": {
-    "start": "node --env-file=.envapp.js",
+    "start": "node --env-file=.env app.js",
     "watch": "node --env-file=.env --watch app.js"
   },
   "keywords": [
